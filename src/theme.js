@@ -23,4 +23,12 @@ export const theme = createTheme({
       desktop: 1440,
     },
   },
+  overrides: {
+    MuiTextField: {
+      root: {
+        padding: "2px",
+      },
+      padding: "2px",
+    },
+  },
 });

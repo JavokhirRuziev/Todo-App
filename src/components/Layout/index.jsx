@@ -34,6 +34,7 @@ export default function HideAppBar(props) {
   }));
   const StyledContainer = styled(Container)(({ theme }) => ({
     marginTop: "50px",
+    marginBottom: "50px",
   }));
   return (
     <React.Fragment>
@@ -41,7 +42,7 @@ export default function HideAppBar(props) {
       <HideOnScroll {...props}>
         <AppBar>
           <StyledToolbar>
-            <Typography variant="h5" fontWeight={"bold"}>
+            <Typography variant="h4" fontWeight={"bold"} mx={"auto"}>
               Todos
             </Typography>
           </StyledToolbar>

@@ -59,7 +59,7 @@ export default function ModalBase({ children, open, setOpen, maxHeight }) {
     p: 4,
     borderRadius: "5px",
     overflow: "scroll",
-    height: "100%",
+    height: "auto",
     maxHeight: maxHeight || 600,
     scrollbarWidth: "none",
   };

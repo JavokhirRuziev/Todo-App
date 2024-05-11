@@ -113,16 +113,17 @@ export default ({ onCreate, name, categoryParam, date, setShowFilters }) => {
                 <ActionsWrapper>
                   <Button
                     type="submit"
-                    size="small"
+                    size="medium"
                     variant="contained"
                     color="secondary"
                     disabled={isSubmitting}
+                    sx={{ ml: 1 }}
                   >
                     Search
                   </Button>
                   <Button
                     type="submit"
-                    size="small"
+                    size="medium"
                     variant="contained"
                     color="warning"
                     onClick={() => {

@@ -16,7 +16,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -89,9 +88,14 @@ export default () => {
         {mobile ? (
           <Paper>
             <Wrapper>
-              <IconButton onClick={openFilterModal}>
-                <FilterListTwoToneIcon />
-              </IconButton>
+              <Button
+                onClick={openFilterModal}
+                startIcon={<FilterListTwoToneIcon />}
+                color="info"
+                variant="contained"
+              >
+                Filters
+              </Button>
               <Tooltip title="Add" placement="top">
                 <Button
                   variant="contained"

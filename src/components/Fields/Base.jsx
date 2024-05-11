@@ -133,7 +133,7 @@ export default ({
         />
       )}
       {touched[field.name] && errors[field.name] && (
-        <Typography component="div" sx={textStyles}>
+        <Typography sx={textStyles} variant="body2">
           {errors[field.name]}
         </Typography>
       )}

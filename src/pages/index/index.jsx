@@ -4,7 +4,7 @@ import Create from "./components/Create";
 import Edit from "./components/Edit";
 import Modal from "../../components/Modals/ModalBase";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Remove from "./components/Remove";
 import Filters from "./components/Filters";
 import { useSearchParams } from "react-router-dom";
@@ -16,10 +16,12 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
+import { complete } from "../../store/slices";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
   const mobile = useMediaQuery((theme) => theme.breakpoints.down("tablet"));
   const name = searchParams.get("name");
   const categoryParam = searchParams.get("category");
@@ -44,6 +46,10 @@ export default () => {
   const openRemoveModal = (e) => {
     setShowRemove(true);
     setSelected(e);
+  };
+
+  const handleCompleteTodo = (e) => {
+    dispatch(complete(e));
   };
   useEffect(() => {
     const filterTodos = () => {
@@ -116,6 +122,7 @@ export default () => {
         <Table
           onEdit={openEditModal}
           onRemove={openRemoveModal}
+          onDone={(e) => handleCompleteTodo(e)}
           arr={filteredTodos}
         />
       </Layout>

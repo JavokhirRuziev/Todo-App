@@ -7,7 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Edit, Remove } from "@mui/icons-material";
+import Edit from "@mui/icons-material/Edit";
+import Done from "@mui/icons-material/Done";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -18,6 +19,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
 import { ReactComponent as Empty } from "../assest/icons/empty.svg";
+import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,9 +33,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -96,7 +96,12 @@ const EmptyText = styled(Typography)(() => ({
   color: "GrayText",
 }));
 
-export default function CustomizedTables({ arr = [], onEdit, onRemove }) {
+export default function CustomizedTables({
+  arr = [],
+  onEdit,
+  onRemove,
+  onDone,
+}) {
   const mobile = useMediaQuery((theme) => theme.breakpoints.down("tablet"));
 
   return (
@@ -113,45 +118,65 @@ export default function CustomizedTables({ arr = [], onEdit, onRemove }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {arr?.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.category?.label}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.date}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    <ActionWrapper>
-                      <Tooltip
-                        title="Edit"
-                        sx={{ cursor: "pointer" }}
-                        placement="top"
-                      >
-                        <IconButton
-                          color="secondary"
-                          onClick={() => onEdit(row)}
+              {arr?.map((row) => {
+                return (
+                  <StyledTableRow key={row.name} sx={completedBg(row)}>
+                    <StyledTableCell
+                      component="th"
+                      scope="row"
+                      sx={completedStyles(row)}
+                    >
+                      {row.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right" sx={completedStyles(row)}>
+                      {row.category?.label}
+                    </StyledTableCell>
+                    <StyledTableCell align="right" sx={completedStyles(row)}>
+                      {row.date}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <ActionWrapper>
+                        <Tooltip
+                          title="Edit"
+                          sx={{ cursor: "pointer" }}
+                          placement="top"
                         >
-                          <Edit />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title="Remove"
-                        sx={{ cursor: "pointer" }}
-                        placement="top"
-                      >
-                        <IconButton
-                          color="primary"
-                          onClick={() => onRemove(row)}
+                          <IconButton
+                            color="secondary"
+                            onClick={() => onEdit(row)}
+                          >
+                            <Edit />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip
+                          title="Done"
+                          sx={{ cursor: "pointer" }}
+                          placement="top"
                         >
-                          <Remove />
-                        </IconButton>
-                      </Tooltip>
-                    </ActionWrapper>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+                          <IconButton
+                            color={row?.completed ? "error" : "success"}
+                            onClick={() => onDone(row)}
+                          >
+                            {row?.completed ? <CancelIcon /> : <Done />}
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip
+                          title="Remove"
+                          sx={{ cursor: "pointer" }}
+                          placement="top"
+                        >
+                          <IconButton
+                            color="primary"
+                            onClick={() => onRemove(row)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </ActionWrapper>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
             </TableBody>
           </Table>
           {arr?.length < 1 && (
@@ -178,7 +203,7 @@ export default function CustomizedTables({ arr = [], onEdit, onRemove }) {
           <MobileWrapper>
             {arr?.map((row, index) => (
               <>
-                <StyledCard>
+                <StyledCard sx={completedBg(row)}>
                   <CardContent>
                     <TextWrapper>
                       <CardText color="text.secondary" gutterBottom>
@@ -220,7 +245,13 @@ export default function CustomizedTables({ arr = [], onEdit, onRemove }) {
                   <CardActions>
                     <ActionButtonsWrapper>
                       <IconButton color="primary" onClick={() => onRemove(row)}>
-                        <Remove />
+                        <DeleteIcon />
+                      </IconButton>
+                      <IconButton
+                        color={row?.completed ? "error" : "success"}
+                        onClick={() => onDone(row)}
+                      >
+                        {row?.completed ? <CancelIcon /> : <Done />}
                       </IconButton>
                       <IconButton color="secondary" onClick={() => onEdit(row)}>
                         <Edit />
@@ -237,3 +268,11 @@ export default function CustomizedTables({ arr = [], onEdit, onRemove }) {
     </>
   );
 }
+
+const completedStyles = (row) => ({
+  textDecoration: row?.completed ? "line-through" : "unset",
+});
+
+const completedBg = (row) => ({
+  bgcolor: row?.completed ? "#dbffd4" : "white",
+});

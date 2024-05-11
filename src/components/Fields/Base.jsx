@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { theme } from "../../theme";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
@@ -41,22 +40,12 @@ export default ({
               color: "black",
               bgcolor: "common.white",
               p: 0,
+              border: "none",
               "&:hover": {
                 bgcolor: "grey.100",
-                border: "none",
-                fieldset: {
-                  border: "1px solid",
-                  borderColor: "secondary.main",
-                },
               },
-              fieldset: {
-                borderColor: "secondary.main",
-                border: `1px solid ${theme.palette.secondary.main}`,
-              },
+              fieldset: {},
               "&.Mui-focused fieldset": {
-                // transition: "0.3s",
-                border: "2px solid",
-                borderColor: "secondary.main",
                 zIndex: 2,
               },
               "&.Mui-focused": {
@@ -65,7 +54,7 @@ export default ({
             },
             "& .MuiOutlinedInput-input": {
               height: "auto",
-              p: 1.2,
+              p: 1.3,
               borderRadius: "4px",
               "&::placeholder": {
                 color: "grey.400",
@@ -99,20 +88,8 @@ export default ({
               p: 0,
               "&:hover": {
                 bgcolor: "grey.100",
-                border: "none",
-                fieldset: {
-                  border: "1px solid",
-                  borderColor: "secondary.main",
-                },
-              },
-              fieldset: {
-                borderColor: "secondary.main",
-                border: `1px solid ${theme.palette.secondary.main}`,
               },
               "&.Mui-focused fieldset": {
-                // transition: "0.3s",
-                border: "2px solid",
-                borderColor: "secondary.main",
                 zIndex: 2,
               },
               "&.Mui-focused": {
